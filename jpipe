@@ -1,0 +1,20 @@
+#!/usr/bin/env node
+var buffer="";
+
+if(process.stdin.isTTY)
+  JS();
+else {
+  process.stdin.on('readable', function() {
+    if(c=this.read())
+      if(c.length>0)
+        buffer+=c;
+  });
+  process.stdin.on('end', function() {
+    buffer=buffer.trim();
+    JS();
+  });
+}
+
+function JS() {
+  eval(process.argv.slice(2).join(' '));
+}
